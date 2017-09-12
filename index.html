@@ -1,0 +1,159 @@
+<html>
+    <head>
+        <title>CodePlayer</title>
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+    
+    <body>
+        <div id="topbar">
+            <div id="logo">CodePlayer</div>
+            <div id="controlPannel">
+                <div class="pannelButton active" id="html">HTML</div>
+                <div class="pannelButton" id="css">CSS</div>
+                <div class="pannelButton" id="javascript">JavaScript</div>
+                <div class="pannelButton active" id="output">Output</div>
+    
+            </div>
+        
+        </div>
+        
+        <div id="bodyContainer">
+            <textarea id="htmlTextarea" class="panel"><p id="paragraph">Hello World!</p></textarea>
+            <textarea id="cssTextarea" class="panel"></textarea>
+            <textarea id="jsTextarea" class="panel"></textarea>
+            <iframe id="outputTextarea" class="panel"></iframe>
+
+        </div>
+        
+        <script type="text/javascript">
+            
+            function updateOutput() {
+                
+                $("iframe").contents().find("html").html("<html><head><style type='text/css'>" + $("#cssTextarea").val() + "</style></head><body>" + $("#htmlTextarea").val() + "</body></html>");
+                
+                document.getElementById("outputTextarea").contentWindow.eval($("#jsTextarea").val());
+            }
+            
+            updateOutput();
+            
+            
+            
+            $(".panel").height($(window).height() - $("#topbar").height() - 15);
+            $(".panel").width(($(window).width() / 2) - 10);
+            var ap = 2; // Number of active panels
+            var width_pct = 100/ap; // panel width in terms of percentage of the window's width
+            $(".pannelButton").mousedown(function(){
+                $(this).toggleClass("active");
+                $(this).removeClass("highlight");
+                $(this).removeClass("activeHighlight");
+            });
+            $(".pannelButton").hover(function(){
+                var panelClass = $(this).attr("class");
+                
+                if(panelClass == "pannelButton"){
+                    $(this).addClass("highlight");
+                }
+                else if(panelClass == "pannelButton active"){
+                    $(this).addClass("activeHighlight");
+                }
+                
+            },
+                    function(){
+                var panelClass = $(this).attr("class");
+                if(panelClass == "pannelButton highlight"){
+                    $(this).removeClass("highlight");
+                }
+                else if(panelClass == "pannelButton active activeHighlight"){
+                    $(this).removeClass("activeHighlight");
+                }
+            });
+            
+            $(".pannelButton").mouseup(function(){
+                var panelClass = $(this).attr("class");
+                
+                if(panelClass == "pannelButton"){
+                    $(this).addClass("highlight");
+                }
+                else if(panelClass == "pannelButton active"){
+                    $(this).addClass("activeHighlight");
+                }
+            });
+            $("#html").click(function(){
+                $("#htmlTextarea").toggle();
+                if($("#htmlTextarea").css("display") == "none"){
+                    ap--;
+                    width_pct = 100/ap;
+                    $(".panel").width(width_pct + "%");
+                    $(".panel").width($(".panel").width() - 10);
+                }
+                else{
+                    ap++;
+                    width_pct = 100/ap;
+                    $(".panel").width(width_pct + "%");
+                    $(".panel").width($(".panel").width() - 10);
+                }
+            });
+            
+            $("#css").click(function(){
+                $("#cssTextarea").toggle();
+                if($("#cssTextarea").css("display") == "none"){
+                    ap--;
+                    width_pct = 100/ap;
+                    $(".panel").width(width_pct + "%");
+                    $(".panel").width($(".panel").width() - 10);
+                }
+                else{
+                    ap++;
+                    width_pct = 100/ap;
+                    $(".panel").width(width_pct + "%");
+                    $(".panel").width($(".panel").width() - 10);
+                }
+            });
+            
+            $("#javascript").click(function(){
+                $("#jsTextarea").toggle();
+                if($("#jsTextarea").css("display") == "none"){
+                    ap--;
+                    width_pct = 100/ap;
+                    $(".panel").width(width_pct + "%");
+                    $(".panel").width($(".panel").width() - 10);
+                }
+                else{
+                    ap++;
+                    width_pct = 100/ap;
+                    $(".panel").width(width_pct + "%"); 
+                    $(".panel").width($(".panel").width() - 10);
+                }
+            });
+            
+            $("#output").click(function(){
+                $("#outputTextarea").toggle();
+                if($("#outputTextarea").css("display") == "none"){
+                    ap--;
+                    width_pct = 100/ap;
+                    $(".panel").width(width_pct + "%");
+                    $(".panel").width($(".panel").width() - 10);
+                }
+                else{
+                    ap++;
+                    width_pct = 100/ap;
+                    $(".panel").width(width_pct + "%");
+                    $(".panel").width($(".panel").width() - 10);
+                }
+            });
+            
+            $("textarea").on('change keyup paste', function() {
+    
+                updateOutput();
+                
+                
+            });
+
+        </script>
+        
+        
+    </body>
+
+
+</html>
